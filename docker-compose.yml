@@ -1,0 +1,35 @@
+version: "3.3"
+services:
+    app_tray:
+        container_name: "app_tray"
+        build:
+            context: .setup/docker/app
+            dockerfile: Dockerfile
+            args:
+                - USER=${USER}
+        restart: "always"
+        environment:
+            - APACHE_DOCUMENT_ROOT=/var/www/public
+        volumes:
+            - ./:/var/www
+        depends_on:
+            - db_tray
+        links:
+            - db_tray
+        ports:
+            - "8000:80"
+
+    db_tray:
+        container_name: "db_tray"
+        image: mysql
+        command: --default-authentication-plugin=mysql_native_password
+        restart: always
+        ports:
+            - "3306:3306"
+        environment:
+            - MYSQL_RANDOM_ROOT_PASSWORD=true
+            - MYSQL_DATABASE=${DB_DATABASE}
+            - MYSQL_USER=${DB_USERNAME}
+            - MYSQL_PASSWORD=${DB_PASSWORD}
+        volumes:
+            - ./.setup/docker/db:/var/lib/mysql
