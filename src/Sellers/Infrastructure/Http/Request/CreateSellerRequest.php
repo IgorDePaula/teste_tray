@@ -7,7 +7,7 @@ use Tray\Core\Application\AbstractDto;
 use Tray\Core\Infrastructure\Http\Request\RequestInterface;
 use Tray\Sellers\Application\Dto\SellerDto;
 
-class SellerRequest extends FormRequest implements RequestInterface
+class CreateSellerRequest extends FormRequest implements RequestInterface
 {
     /**
      * Determine if the user is authorized to make this request.
