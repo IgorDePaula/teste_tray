@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Tray\Core\Infrastructure\Repository\SellerRepositoryInterface;
 use Tray\Core\Shared\Result;
 use Tray\Sellers\Application\Dto\SellerDto;
+use Tray\Sellers\Infrastructure\Error\InfrastructureError;
 
 class SellerRepository implements SellerRepositoryInterface
 {
@@ -18,7 +19,7 @@ class SellerRepository implements SellerRepositoryInterface
     {
         $result = $this->model->create($sellerDto->toArray());
         if (!property_exists($result, 'id') && empty($result->id)) {
-            return Result::fail('Error creating seller');
+            return Result::fail(new InfrastructureError('Error creating seller'));
         }
         return Result::success($result);
     }

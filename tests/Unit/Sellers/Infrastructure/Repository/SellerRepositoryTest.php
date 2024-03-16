@@ -3,6 +3,7 @@
 use Illuminate\Database\Eloquent\Model;
 use Tray\Core\Shared\Result;
 use Tray\Sellers\Application\Dto\SellerDto;
+use Tray\Sellers\Infrastructure\Error\InfrastructureError;
 use Tray\Sellers\Infrastructure\Repository\SellerRepository;
 
 it('should create a seller', function ($name, $email, $commission) {
@@ -33,6 +34,7 @@ it('should get an error on create a seller', function ($name, $email, $commissio
     $repository = new SellerRepository($modelMock);
 
     expect($repository->createSeller($dtoModk))->toBeInstanceOf(Result::class)
-        ->and($repository->createSeller($dtoModk)->isFailure())->toBeTrue();
+        ->and($repository->createSeller($dtoModk)->isFailure())->toBeTrue()
+        ->and($repository->createSeller($dtoModk)->getValue())->toBeInstanceOf(InfrastructureError::class);
 
 })->with('sellers');
