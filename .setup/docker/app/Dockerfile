@@ -26,5 +26,6 @@ RUN echo "export APACHE_DOCUMENT_ROOT=/var/www/public" >> /etc/apache2/envvars
 RUN sed -ri -e 's/\/var\/www\/html/${APACHE_DOCUMENT_ROOT}/g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's/\/var\/www/${APACHE_DOCUMENT_ROOT}/g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 RUN mkdir -p /var/www/storage/logs/
+RUN echo 'xdebug.mode=coverage' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 RUN useradd ${USER}
 USER ${USER}

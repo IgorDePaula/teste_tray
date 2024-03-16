@@ -21,7 +21,7 @@ docker-composer-install: docker-up ## Instala as dependencias do composer
 
 docker-test: docker-up docker-clear ## Executa os testes da apicacao sem cobertura. Use a opcao 'FILTER' para rodar um teste especifico
 ifdef FILTER
-	docker exec -t $(CONTAINER_BACK) "php artisan test" -- --filter="$(FILTER)"
+	docker exec -t $(CONTAINER_BACK) php artisan test -- --filter="$(FILTER)"
 else
 	docker exec -t $(CONTAINER_BACK) php artisan test
 endif
@@ -32,8 +32,8 @@ docker-logs: docker-up ## Visualiza os logs do container
 docker-clear: docker-up ## Limpa os caches do laravel
 	docker exec $(CONTAINER_BACK) /bin/bash -c "php artisan optimize:clear" && chmod -R 777 storage && chmod -R 777 bootstrap
 
-docker-coverage-html: docker-up docker-clear ## Executa os testes com cobertura
-	docker exec -t $(CONTAINER_BACK) composer test-coverage-html
+docker-coverage: docker-up docker-clear ## Executa os testes com cobertura
+	docker exec -t $(CONTAINER_BACK) php artisan test --coverage
 
 help: ## Mostra o menu de ajuda
 	@grep -E '^[a-zA-Z0-9_-]+:.*?## .*$$' $(firstword $(MAKEFILE_LIST)) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}'
