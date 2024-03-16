@@ -1,10 +1,10 @@
 <?php
 
-namespace Tray\Sellers\Application;
+namespace Tray\Sellers\Application\Dto;
 
 use Tray\Core\Application\AbstractDto;
 
-class SellerRequestDto extends AbstractDto
+class SellerDto extends AbstractDto
 {
     public function __construct(public readonly string $name, public readonly string $email, public readonly ?float $commission)
     {
