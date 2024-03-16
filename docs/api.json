@@ -1,0 +1,115 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "API Tray",
+        "description": "API Tray",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000"
+        }
+    ],
+    "paths": {
+        "/api/sellers": {
+            "post": {
+                "summary": "Create a Seller",
+                "description": "Create a seller",
+                "operationId": "createSeller",
+                "responses": {
+                    "201": {
+                        "description": "Created response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CreateSeller"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Data Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CreateSellerDataError"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CreateSellerValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "CreateSeller": {
+                "type": "object",
+                "required": [
+                    "name",
+                    "email"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Ambit name"
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "Ambit email"
+                    }
+                }
+            },
+            "CreateSellerValidationError": {
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string",
+                                "default": "This field cannot be empty"
+                            },
+                            "email": {
+                                "type": "string",
+                                "default": "This cannot be empty and must be an email"
+                            }
+                        }
+                    }
+                }
+            },
+            "CreateSellerDataError": {
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "error": {
+                                "type": "string",
+                                "default": "Some Worng Happens"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
