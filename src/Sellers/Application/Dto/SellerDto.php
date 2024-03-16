@@ -6,7 +6,7 @@ use Tray\Core\Application\AbstractDto;
 
 class SellerDto extends AbstractDto
 {
-    public function __construct(public readonly string $name, public readonly string $email, public readonly ?float $commission)
+    public function __construct(public readonly string $name, public readonly string $email, public readonly ?float $commission = 0.0)
     {
 
     }
