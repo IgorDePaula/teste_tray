@@ -20,6 +20,11 @@ docker-composer-install: docker-up ## Instala as dependencias do composer
 	docker exec $(CONTAINER_BACK) composer install --no-interaction --no-scripts  && chmod -R 777 bootstrap &&  php artisan key:generate
 
 docker-test: docker-up docker-clear ## Executa os testes da apicacao sem cobertura. Use a opcao 'FILTER' para rodar um teste especifico
+ifdef FILTER
+	docker exec -t $(CONTAINER_BACK) "php artisan test" -- --filter="$(FILTER)"
+else
+	docker exec -t $(CONTAINER_BACK) php artisan test
+endif
 
 docker-logs: docker-up ## Visualiza os logs do container
 	docker compose logs --follow
