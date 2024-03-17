@@ -2,9 +2,10 @@
 
 namespace Tray\Sellers\Domain\Entity;
 
+use Tray\Core\Application\ArrayableInterface;
 use Tray\Core\Domain\Entity\EntityInterface;
 
-class SellerEntity implements EntityInterface
+class SellerEntity implements EntityInterface, ArrayableInterface
 {
 
     public function __construct(
@@ -37,4 +38,13 @@ class SellerEntity implements EntityInterface
         return $this->commission;
     }
 
+    public function toArray()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'email' => $this->email,
+            'commission' => $this->commission,
+        ];
+    }
 }
