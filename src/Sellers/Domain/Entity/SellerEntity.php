@@ -32,7 +32,7 @@ class SellerEntity implements EntityInterface
         return $this->email;
     }
 
-    public function getCommission(): string
+    public function getCommission(): float
     {
         return $this->commission;
     }
