@@ -14,7 +14,7 @@ class CreateSellRequest extends FormRequest implements RequestInterface
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -26,7 +26,7 @@ class CreateSellRequest extends FormRequest implements RequestInterface
     {
         return [
             'seller' => 'required|integer',
-            'amount' => 'required|numberic',
+            'amount' => 'required|numeric',
         ];
     }
 

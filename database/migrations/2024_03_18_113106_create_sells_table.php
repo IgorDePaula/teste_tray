@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->timestamps();
             $table->float('amount', 7, 2);
-            $table->float('commission', 7, 2);
+            $table->float('commission', 7, 2)->nullable();
             $table->unsignedBigInteger('seller_id');
         });
 
