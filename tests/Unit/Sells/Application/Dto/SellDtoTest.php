@@ -10,6 +10,6 @@ it('should get instance sell dto', function ($amount, $commission) {
 it('should get array sell dto', function ($amount, $commission) {
     $dto = new SellDto($amount, $commission);
     expect($dto->toArray())->toBeArray()
-        ->and($dto->toArray()['amount'])->toB($amount)
+        ->and($dto->toArray()['amount'])->toBe($amount)
         ->and($dto->toArray()['commission'])->toBe($commission);
 })->with('sells');
