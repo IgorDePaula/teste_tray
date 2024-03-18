@@ -42,4 +42,9 @@ class SellerRepository implements SellerRepositoryInterface
             return Result::fail(new InfrastructureError($exception->getMessage()));
         }
     }
+
+    public function findSeller(int $id): Result
+    {
+        throw new \Exception('Not Implemented');
+    }
 }

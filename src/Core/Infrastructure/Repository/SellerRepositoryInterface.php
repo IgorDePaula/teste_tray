@@ -10,4 +10,6 @@ interface SellerRepositoryInterface
     public function createSeller(SellerDto $sellerDto): Result;
 
     public function list(): Result;
+
+    public function findSeller(int $id): Result;
 }
