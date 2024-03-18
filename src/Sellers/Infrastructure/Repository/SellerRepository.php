@@ -32,12 +32,12 @@ class SellerRepository implements SellerRepositoryInterface
     public function list(): Result
     {
         try {
-            $all = $this->model->newQuery();
-            $sellers = [];
+            $all = $this->model::get();
+            $collection = new SellerCollection();
             foreach ($all as $seller) {
-                $sellers[] = $this->director->make($seller->toArray());
+                $collection->add($this->director->make($seller->toArray()));
             }
-            return Result::success(SellerCollection::make($sellers));
+            return Result::success($collection);
         } catch (\Exception $exception) {
             return Result::fail(new InfrastructureError($exception->getMessage()));
         }

@@ -28,7 +28,7 @@ class Collection implements IteratorAggregate, Countable, ArrayAccess, Arrayable
 
     public static function make(array $items = []): Collection
     {
-        return new self($items);
+        return new static($items);
     }
 
     public function first(): mixed

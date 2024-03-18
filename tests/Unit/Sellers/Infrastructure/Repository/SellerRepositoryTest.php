@@ -57,11 +57,14 @@ it('Should  get error on list sellers', function () {
 it('should list sellers', function ($name, $email, $commission) {
     $entity = new \Tray\Sellers\Domain\Entity\SellerEntity(1, $name, $email, $commission);
     $modelMock = Mockery::mock(Model::class)
-        ->shouldReceive('newQuery')
-        ->andReturn(SellerCollection::make([$entity]))->getMock();
+        ->shouldReceive('get')
+        ->andReturn(SellerCollection::make([$entity]))
+        ->getMock();
+
 
     $repository = new SellerRepository($modelMock, new SellerDirector());
     $result = $repository->list();
+
     expect($result)->toBeInstanceOf(Result::class)
         ->and($result->isSuccess())->toBeTrue()
         ->and($result->getValue()->count())->toBe(1)
