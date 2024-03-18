@@ -12,6 +12,41 @@
     ],
     "paths": {
         "/api/sellers": {
+            "get": {
+                "description": "List sellers",
+                "responses": {
+                    "200": {
+                        "description": "List all sellers",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ListSellers"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ListSellerInternalServerError"
+                                }
+                            }
+                        }
+                    },
+                    "503": {
+                        "description": "Service Unavaiable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ListSellerServiceUnavaiable"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "post": {
                 "summary": "Create a Seller",
                 "description": "Create a seller",
@@ -22,7 +57,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/CreateSeller"
+                                    "$ref": "#/components/schemas/CreatedSeller"
                                 }
                             }
                         }
@@ -47,26 +82,83 @@
                             }
                         }
                     }
+                },
+                "requestBody": {
+                    "description": "Create a single seller",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateSeller"
+                            }
+                        }
+                    }
                 }
             }
         }
     },
     "components": {
         "schemas": {
-            "CreateSeller": {
-                "type": "object",
-                "required": [
-                    "name",
-                    "email"
-                ],
+            "SellerEntity": {
                 "properties": {
+                    "id": {
+                        "type": "integer",
+                        "description": "Seller ID",
+                        "default": "Seller ID"
+                    },
                     "name": {
                         "type": "string",
-                        "description": "Ambit name"
+                        "description": "Seller name",
+                        "default": "Seller name"
                     },
                     "email": {
                         "type": "string",
-                        "description": "Ambit email"
+                        "description": "Seller email",
+                        "default": "Seller email"
+                    },
+                    "commission": {
+                        "type": "number",
+                        "description": "Seller commission",
+                        "default": 8.5
+                    }
+                }
+            },
+            "ListSellerInternalServerError": {
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "data": {
+                        "type": "string",
+                        "default": "Some Worng Happens"
+                    }
+                }
+            },
+            "ListSellerServiceUnavaiable": {
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "data": {
+                        "type": "string",
+                        "default": "Service Unavaiable"
+                    }
+                }
+            },
+            "ListSellers": {
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "type": "boolean"
+                    },
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SellerEntity"
+                        }
                     }
                 }
             },
@@ -100,13 +192,62 @@
                         "default": false
                     },
                     "data": {
+                        "type": "string",
+                        "default": "Some Worng Happens"
+                    }
+                }
+            },
+            "CreatedSeller": {
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "data": {
                         "type": "object",
                         "properties": {
-                            "error": {
+                            "id": {
+                                "type": "integer",
+                                "default": 1
+                            },
+                            "name": {
                                 "type": "string",
-                                "default": "Some Worng Happens"
+                                "default": "Seller name"
+                            },
+                            "email": {
+                                "type": "string",
+                                "default": "Seller email"
+                            },
+                            "commission": {
+                                "type": "number",
+                                "default": 8.5
                             }
                         }
+                    }
+                }
+            },
+            "CreateSeller": {
+                "type": "object",
+                "required": [
+                    "name",
+                    "email"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Seller name",
+                        "default": "Seller name"
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "Seller email",
+                        "default": "Seller email"
+                    },
+                    "commission": {
+                        "type": "number",
+                        "description": "Seller commission",
+                        "default": 8.5
                     }
                 }
             }
