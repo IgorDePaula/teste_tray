@@ -3,15 +3,18 @@
 namespace Tray\Sells\Infrastructure\Provider;
 
 use App\Models\Sell;
+use App\Models\Seller;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Tray\Core\Application\ActionFactory;
+use Tray\Core\Infrastructure\Repository\SellerRepositoryInterface;
 use Tray\Core\Infrastructure\Repository\SellRepositoryInterface;
 use Tray\Core\Shared\MapperInterface;
 use Tray\Sells\Application\Action\CreateSellAction;
 use Tray\Sells\Application\ActionEnum;
 use Tray\Sells\Infrastructure\Http\Controller\CreateSellController;
+use Tray\Sells\Infrastructure\Repository\SellerRepository;
 use Tray\Sells\Infrastructure\Repository\SellRepository;
 use Tray\Sells\Shared\SellMapper;
 
@@ -39,6 +42,20 @@ class SellProvider extends ServiceProvider
         $this->app->when(CreateSellAction::class)
             ->needs(SellRepositoryInterface::class)
             ->give(fn($app) => $app->make(SellRepository::class));
+
+        $this->app->when(CreateSellAction::class)
+            ->needs(SellerRepositoryInterface::class)
+            ->give(fn($app) => $app->make(SellerRepository::class));
+
+        $this->app->singleton(MapperInterface::class, SellMapper::class);
+
+        $this->app->when(CreateSellAction::class)
+            ->needs(MapperInterface::class)
+            ->give(fn($app) => $app->make(MapperInterface::class));
+
+        $this->app->when(SellerRepository::class)
+            ->needs(Model::class)
+            ->give(fn($app) => $app->make(Seller::class));
 
         $this->app->when(SellRepository::class)
             ->needs(Model::class)

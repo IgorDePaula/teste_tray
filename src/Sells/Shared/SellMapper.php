@@ -5,13 +5,18 @@ namespace Tray\Sells\Shared;
 use Tray\Core\Application\AbstractDto;
 use Tray\Core\Domain\Entity\EntityInterface;
 use Tray\Core\Shared\MapperInterface;
+use Tray\Sells\Application\Dto\SellDto;
+use Tray\Sells\Application\Dto\SellerDto;
 
 class SellMapper implements MapperInterface
 {
 
     public function toDto($data, ?string $convertTo = null): AbstractDto
     {
-        throw new \Exception('Not Implemented');
+        return match ($convertTo) {
+            SellDto::class => new SellDto(...$data),
+            SellerDto::class => new SellerDto(...$data)
+        };
     }
 
     public function toPersistence(AbstractDto $data): array
