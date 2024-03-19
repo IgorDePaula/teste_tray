@@ -10,12 +10,22 @@ use Tray\Sells\Infrastructure\Error\NotFound;
 use Tray\Sells\Shared\SellMapper;
 
 it('should create Sell action', function ($amount, $commission) {
+    $mockSeller = new stdClass;
+    $mockSeller->id = 1;
+    $mockSeller->name = 'John';
+    $mockSeller->email = 'email@email.com';
+    $mockSell = new stdClass;
+    $mockSell->id = 1;
+    $mockSell->amount = $amount;
+    $mockSell->commission = $commission;
+    $mockSell->seller = $mockSeller;
+    $mockSell->created_at = new DateTime('2022-01-01');
     $seller = SellerDto::fromArray(['id' => 1, 'name' => 'Test', 'email' => 'email@email.com', 'commission' => 8.5]);
     $sellerRepositoryMock = Mockery::mock(SellerRepositoryInterface::class)
         ->shouldReceive('findSeller')->andReturn(Result::success($seller))->getMock();
     $repositoryMock = Mockery::mock(SellRepositoryInterface::class)
         ->shouldReceive('createSell')
-        ->andReturn(Result::success([]))
+        ->andReturn(Result::success($mockSell))
         ->getMock();
 
     $createAction = new CreateSellAction($repositoryMock, $sellerRepositoryMock, new SellMapper());

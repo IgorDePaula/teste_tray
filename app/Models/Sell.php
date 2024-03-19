@@ -10,4 +10,9 @@ class Sell extends Model
     use HasFactory;
 
     protected $fillable = ['amount', 'seller_id', 'commission'];
+
+    public function seller()
+    {
+        return $this->belongsTo(Seller::class, 'seller_id');
+    }
 }
