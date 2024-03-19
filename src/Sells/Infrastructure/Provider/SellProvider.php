@@ -47,15 +47,11 @@ class SellProvider extends ServiceProvider
             ->needs(SellerRepositoryInterface::class)
             ->give(fn($app) => $app->make(SellerRepository::class));
 
-        $this->app->singleton(MapperInterface::class, SellMapper::class);
-
-        $this->app->when(CreateSellAction::class)
-            ->needs(MapperInterface::class)
-            ->give(fn($app) => $app->make(MapperInterface::class));
-
         $this->app->when(SellerRepository::class)
             ->needs(Model::class)
             ->give(fn($app) => $app->make(Seller::class));
+
+        $this->app->bind(MapperInterface::class, fn() => new SellMapper());
 
         $this->app->when(SellRepository::class)
             ->needs(Model::class)

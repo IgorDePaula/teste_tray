@@ -7,7 +7,7 @@ it('should calculate commission', function () {
 
     $sellerDto = new SellerDto(1, 'Test', 'email@test.com', 8.5);
 
-    $sellDto = new SellDto(120, 0.0);
+    $sellDto = new SellDto(120, 0.0, 1);
 
     $sell = new Sell($sellDto);
 

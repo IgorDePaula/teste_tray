@@ -29,7 +29,7 @@ it('should create Sell action', function ($amount, $commission) {
 it('should get error on create Sell action', function ($amount, $commission) {
 
     $sellerRepositoryMock = Mockery::mock(SellerRepositoryInterface::class)
-        ->shouldReceive('findSeller')->andReturn(Result::fail([]))->getMock();
+        ->shouldReceive('findSeller')->andReturn(Result::fail(new NotFound()))->getMock();
     $repositoryMock = Mockery::mock(SellRepositoryInterface::class)
         ->shouldReceive('createSell')
         ->andReturn(Result::fail(new NotFound()))

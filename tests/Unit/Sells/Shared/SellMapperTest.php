@@ -20,6 +20,7 @@ it('should mapper sell to sell dto', function () {
     $data = [
         'amount' => 12.6,
         'commission' => 1,
+        'seller' => 1
     ];
     $mapper = new SellMapper();
     expect($mapper->toDto($data, SellDto::class))->toBeInstanceOf(SellDto::class);

@@ -9,6 +9,7 @@ use Tray\Core\Infrastructure\Repository\SellRepositoryInterface;
 use Tray\Core\Shared\MapperInterface;
 use Tray\Core\Shared\Result;
 use Tray\Sells\Application\Dto\SellDto;
+use Tray\Sells\Application\Dto\SellerDto;
 use Tray\Sells\Domain\Aggregate\Sell;
 use Tray\Sells\Infrastructure\Error\NotFound;
 
@@ -28,15 +29,16 @@ class CreateSellAction implements ActionInterface
         $seller = $this->sellerRepository->findSeller($dto->seller);
 
         if ($seller->isFailure()) {
-            return Result::fail(new NotFound('Seller not found'));
+            return Result::fail(new NotFound($seller->getValue()->getMessage()));
         }
         $seller = $seller->getValue();
         $data['amount'] = $dto->amount;
         $data['commission'] = $seller->commission;
+        $data['seller'] = $seller->id;
         $sellDto = $this->mapper->toDto($data, SellDto::class);
 
         $sell = new Sell($sellDto);
-        $commission = $sell->calculateCommission($seller);
+        $commission = $sell->calculateCommission($this->mapper->toDto($seller->toArray(), SellerDto::class));
         $sellDto = $this->mapper->toDto([...$sellDto->toArray(), 'commission' => $commission], SellDto::class);
         return $this->repository->createSell($sellDto);
     }

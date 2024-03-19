@@ -21,7 +21,7 @@ docker-composer-install: docker-up ## Instala as dependencias do composer
 
 docker-test: docker-up docker-clear ## Executa os testes da apicacao sem cobertura. Use a opcao 'FILTER' para rodar um teste especifico
 ifdef FILTER
-	docker exec -t $(CONTAINER_BACK) php artisan test -- --filter="$(FILTER)"
+	docker exec -t $(CONTAINER_BACK) php artisan test --filter="$(FILTER)"
 else
 	docker exec -t $(CONTAINER_BACK) php artisan test
 endif

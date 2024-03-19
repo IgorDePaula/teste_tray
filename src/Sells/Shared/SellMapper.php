@@ -14,8 +14,8 @@ class SellMapper implements MapperInterface
     public function toDto($data, ?string $convertTo = null): AbstractDto
     {
         return match ($convertTo) {
-            SellDto::class => new SellDto(...$data),
-            SellerDto::class => new SellerDto(...$data)
+            SellDto::class => SellDto::fromArray($data),
+            SellerDto::class => SellerDto::fromArray($data)
         };
     }
 

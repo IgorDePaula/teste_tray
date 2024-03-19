@@ -3,12 +3,12 @@
 use Illuminate\Database\Eloquent\Model;
 use Tray\Core\Shared\Result;
 use Tray\Sellers\Infrastructure\Error\InfrastructureError;
-use Tray\Sells\Application\Dto\CreateSellDto;
+use Tray\Sells\Application\Dto\SellDto;
 use Tray\Sells\Infrastructure\Repository\SellRepository;
 use Tray\Sells\Shared\SellMapper;
 
-it('should create an sell', function ($amount, $_, $seller) {
-    $dto = new CreateSellDto($seller, $amount);
+it('should create an sell', function ($amount, $commission, $seller) {
+    $dto = new SellDto($amount, $commission, $seller);
     $resultMock = new \stdClass();
     $resultMock->id = 1;
     $modelMock = \Mockery::mock(Model::class)
@@ -24,8 +24,8 @@ it('should create an sell', function ($amount, $_, $seller) {
 })->with('sells');
 
 
-it('should get error on create an sell', function ($amount, $_, $seller) {
-    $dto = new CreateSellDto($seller, $amount);
+it('should get error on create an sell', function ($amount, $commission, $seller) {
+    $dto = new SellDto($amount, $commission, $seller);
     $resultMock = new \stdClass();
     $modelMock = \Mockery::mock(Model::class)
         ->shouldReceive('create')

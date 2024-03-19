@@ -30,8 +30,8 @@ class SellerRepository implements SellerRepositoryInterface
     public function findSeller(int $id): Result
     {
         $seller = $this->model->find($id);
-        if (!property_exists($seller, 'id') && empty($seller->id)) {
-            return Result::fail(new NotFound('Not Found'));
+        if (empty($seller->id)) {
+            return Result::fail(new NotFound('Seller Not Found'));
         }
         return Result::success($seller);
     }
