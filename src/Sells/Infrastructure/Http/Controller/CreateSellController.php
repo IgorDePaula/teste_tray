@@ -34,6 +34,6 @@ class CreateSellController extends Controller
                 NotFound::class => new JsonResponse(['success' => false, 'data' => $result->getValue()->getMessage()], JsonResponse::HTTP_NOT_FOUND),
             };
         }
-        return new JsonResponse(['success' => false, 'data' => $result->getValue()->toArray()], JsonResponse::HTTP_CREATED);
+        return new JsonResponse(['success' => true, 'data' => $result->getValue()->toArray()], JsonResponse::HTTP_CREATED);
     }
 }
