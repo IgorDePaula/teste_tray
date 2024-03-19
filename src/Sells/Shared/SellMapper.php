@@ -3,10 +3,11 @@
 namespace Tray\Sells\Shared;
 
 use Tray\Core\Application\AbstractDto;
-use Tray\Core\Domain\Entity\EntityInterface;
+use Tray\Core\Domain\AggregateInterface;
 use Tray\Core\Shared\MapperInterface;
 use Tray\Sells\Application\Dto\SellDto;
 use Tray\Sells\Application\Dto\SellerDto;
+use Tray\Sells\Domain\Aggregate\Sell;
 
 class SellMapper implements MapperInterface
 {
@@ -28,8 +29,11 @@ class SellMapper implements MapperInterface
         ];
     }
 
-    public function toDomain(array $data): AbstractDto|EntityInterface
+    public function toDomain(AbstractDto $dto): AggregateInterface
     {
-        throw new \Exception('Not Implemented');
+        $convertTo = get_class($dto);
+        return match ($convertTo) {
+            SellDto::class => new Sell($dto),
+        };
     }
 }

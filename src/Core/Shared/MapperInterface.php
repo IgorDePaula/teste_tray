@@ -3,7 +3,7 @@
 namespace Tray\Core\Shared;
 
 use Tray\Core\Application\AbstractDto;
-use Tray\Core\Domain\Entity\EntityInterface;
+use Tray\Core\Domain\AggregateInterface;
 
 interface MapperInterface
 {
@@ -11,5 +11,5 @@ interface MapperInterface
 
     public function toPersistence(AbstractDto $data): array;
 
-    public function toDomain(array $data): AbstractDto|EntityInterface;
+    public function toDomain(AbstractDto $dto): AggregateInterface;
 }
