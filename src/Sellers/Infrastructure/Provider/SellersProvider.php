@@ -26,7 +26,7 @@ class SellersProvider extends ServiceProvider
     {
         Route::middleware('api')
             ->prefix('api')
-            ->group(__DIR__ . '/routes.php');
+            ->group(__DIR__ . '/../Http/routes.php');
     }
 
     /**
