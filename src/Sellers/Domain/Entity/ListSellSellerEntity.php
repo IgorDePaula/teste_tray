@@ -11,7 +11,7 @@ class ListSellSellerEntity implements EntityInterface
         private readonly string $name,
         private readonly string $email,
         private readonly float  $amount,
-        private readonly float  $comission,
+        private readonly float $commission,
         private readonly string $soldAt
     )
     {
@@ -35,7 +35,7 @@ class ListSellSellerEntity implements EntityInterface
 
     public function getCommission(): float
     {
-        return $this->comission;
+        return $this->commission;
     }
 
     public function getSoldAt(): string
