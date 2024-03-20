@@ -9,6 +9,7 @@ use Tray\Core\Shared\Result;
 use Tray\Sellers\Application\Dto\SellerDto;
 use Tray\Sellers\Infrastructure\Error\InfrastructureError;
 use Tray\Sellers\Shared\SellerCollection;
+use Tray\Sells\Infrastructure\Error\NotFound;
 
 class SellerRepository implements SellerRepositoryInterface
 {
@@ -45,6 +46,10 @@ class SellerRepository implements SellerRepositoryInterface
 
     public function findSeller(int $id): Result
     {
-        throw new \Exception('Not Implemented');
+        $seller = $this->model->find($id);
+        if (empty($seller->id)) {
+            return Result::fail(new NotFound('Seller not found'));
+        }
+        return Result::success($seller);
     }
 }
