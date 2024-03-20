@@ -30,7 +30,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ListSellerInternalServerError"
+                                    "$ref": "#/components/schemas/InternalServerError"
                                 }
                             }
                         }
@@ -94,6 +94,65 @@
                     }
                 }
             }
+        },
+        "/api/sell": {
+            "post": {
+                "summary": "Create a Sell",
+                "description": "Create a sell",
+                "operationId": "createSell",
+                "responses": {
+                    "201": {
+                        "description": "Created Sell",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CreatedSell"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Seller Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SellerNotFound"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CreateSellerValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InternalServerError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "description": "Create a single seller",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateSell"
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -122,7 +181,7 @@
                     }
                 }
             },
-            "ListSellerInternalServerError": {
+            "InternalServerError": {
                 "type": "object",
                 "properties": {
                     "success": {
@@ -132,6 +191,19 @@
                     "data": {
                         "type": "string",
                         "default": "Some Worng Happens"
+                    }
+                }
+            },
+            "SellerNotFound": {
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "data": {
+                        "type": "string",
+                        "default": "Seller Not Found"
                     }
                 }
             },
@@ -227,6 +299,49 @@
                     }
                 }
             },
+            "CreatedSell": {
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "integer",
+                                "description": "Sell id",
+                                "default": 1
+                            },
+                            "name": {
+                                "type": "string",
+                                "description": "Seller name",
+                                "default": "Seller name"
+                            },
+                            "email": {
+                                "type": "string",
+                                "description": "Seller email",
+                                "default": "Seller email"
+                            },
+                            "commission": {
+                                "type": "number",
+                                "description": "Sell commission",
+                                "default": 8.5
+                            },
+                            "amount": {
+                                "type": "number",
+                                "description": "Sell amount",
+                                "default": 8.5
+                            },
+                            "sold_at": {
+                                "type": "string",
+                                "description": "Date of sell"
+                            }
+                        }
+                    }
+                }
+            },
             "CreateSeller": {
                 "type": "object",
                 "required": [
@@ -248,6 +363,23 @@
                         "type": "number",
                         "description": "Seller commission",
                         "default": 8.5
+                    }
+                }
+            },
+            "CreateSell": {
+                "type": "object",
+                "required": [
+                    "seller",
+                    "amount"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "integer",
+                        "default": "Sell amount"
+                    },
+                    "email": {
+                        "type": "number",
+                        "default": "Seller id"
                     }
                 }
             }
