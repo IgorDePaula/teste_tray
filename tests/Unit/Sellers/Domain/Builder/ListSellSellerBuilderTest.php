@@ -10,9 +10,8 @@ it('should build an list sell seller', function () {
     $builder->withName('Teste');
     $builder->withEmail('email@emal.com');
     $builder->withAmount(10.5);
-    $builder->withComission(80);
+    $builder->withCommission(80);
     $builder->withSoldAt('30/04/2024');
 
     expect($builder->build())->toBeInstanceOf(ListSellSellerEntity::class);
-
 });

@@ -35,9 +35,9 @@ class ListSellSellerBuilder implements BuilderInterface
         return $this;
     }
 
-    public function withComission(float $comission): self
+    public function withCommission(float $commission): self
     {
-        $this->comission = $comission;
+        $this->comission = $commission;
         return $this;
     }
 
