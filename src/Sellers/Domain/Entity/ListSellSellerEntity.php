@@ -33,7 +33,7 @@ class ListSellSellerEntity implements EntityInterface
         return $this->amount;
     }
 
-    public function getComission(): float
+    public function getCommission(): float
     {
         return $this->comission;
     }
