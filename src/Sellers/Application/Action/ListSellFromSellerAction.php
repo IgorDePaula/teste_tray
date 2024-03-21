@@ -26,12 +26,14 @@ class ListSellFromSellerAction implements ActionInterface
     public function __invoke(?AbstractDto $dto): Result
     {
         $seller = $this->repository->findSeller($dto->sellerId);
+
         if ($seller->isFailure()) {
-            return Result::fail($seller->getValue()->getMessage());
+            return Result::fail($seller->getValue());
         }
         $sells = $seller->getValue()->sells;
         foreach ($sells as $sell) {
-            $this->collection->add($this->mapper->toDto($this->director->make($sell->toArray()), SellResponseDto::class));
+            $sell->load('seller');
+            $this->collection->add($this->mapper->toDto($sell, SellResponseDto::class));
         }
         return Result::success($this->collection);
     }

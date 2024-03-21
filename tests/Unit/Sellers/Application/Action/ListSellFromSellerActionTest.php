@@ -46,6 +46,11 @@ class SellerMock
     {
         if ($name == 'sells') {
             return [new class {
+                public function load()
+                {
+                    //
+                }
+
                 public function toArray()
                 {
                     return [
@@ -63,8 +68,14 @@ class SellerMock
     {
         return [
             'id' => 1,
-            'name' => 'Test',
-            'email' => 'email',
+            'amount' => 5.6,
+            'commission' => 4.3,
+            'sold_at' => new DateTime(),
+            'seller' => [
+                'id' => 1,
+                'name' => 'Test',
+                'email' => 'email',
+            ]
         ];
     }
 }

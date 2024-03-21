@@ -32,6 +32,7 @@ class ActionFactory
         if (!$this->items->offsetExists($action)) {
             throw new \Exception('Enum not found');
         }
+
         $action = $this->app->make($this->items->offsetGet($action));
         return $action($dto);
     }

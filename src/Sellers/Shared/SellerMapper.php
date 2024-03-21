@@ -14,7 +14,7 @@ class SellerMapper implements MapperInterface
     public function toDto($data, ?string $convertTo = null): AbstractDto
     {
         return match ($convertTo) {
-            SellResponseDto::class => SellResponseDto::fromArray($data)
+            SellResponseDto::class => $this->toSellResposeDto($data)
         };
     }
 
@@ -26,5 +26,17 @@ class SellerMapper implements MapperInterface
     public function toDomain(AbstractDto $dto): AggregateInterface
     {
         throw new Exception("Not Implemented");
+    }
+
+    private function toSellResposeDto($sell): SellResponseDto
+    {
+        return SellResponseDto::fromArray([
+            'id' => $sell->id,
+            'name' => $sell->seller->name,
+            'email' => $sell->seller->email,
+            'commission' => $sell->commission,
+            'amount' => $sell->amount,
+            'created_at' => $sell->created_at,
+        ]);
     }
 }
