@@ -95,6 +95,50 @@
                 }
             }
         },
+        "/api/sellers/{sellerId}/sells": {
+            "get": {
+                "description": "List sells from sellers",
+                "responses": {
+                    "200": {
+                        "description": "List sells from sellers",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ListSellFromSeller"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InternalServerError"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Seller Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SellerNotFound"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "parameters": [
+                {
+                    "description": "Create a single seller",
+                    "name": "sellerId",
+                    "in": "path"
+                }
+            ]
+        },
         "/api/sell": {
             "post": {
                 "summary": "Create a Sell",
@@ -182,163 +226,97 @@
                 }
             },
             "InternalServerError": {
-                "type": "object",
+                "type": "string",
                 "properties": {
-                    "success": {
-                        "type": "boolean",
-                        "default": false
-                    },
-                    "data": {
-                        "type": "string",
-                        "default": "Some Worng Happens"
-                    }
+                    "default": "Some Wrong Happens"
                 }
             },
             "SellerNotFound": {
-                "type": "object",
+                "type": "string",
                 "properties": {
-                    "success": {
-                        "type": "boolean",
-                        "default": false
-                    },
-                    "data": {
-                        "type": "string",
-                        "default": "Seller Not Found"
-                    }
+                    "default": "Seller Not Found"
                 }
             },
             "ListSellerServiceUnavaiable": {
-                "type": "object",
+                "type": "string",
                 "properties": {
-                    "success": {
-                        "type": "boolean",
-                        "default": false
-                    },
-                    "data": {
-                        "type": "string",
-                        "default": "Service Unavaiable"
-                    }
+                    "default": "Service Unavaiable"
                 }
             },
             "ListSellers": {
-                "type": "object",
-                "properties": {
-                    "success": {
-                        "type": "boolean"
-                    },
-                    "data": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/SellerEntity"
-                        }
-                    }
-                }
+                "$ref": "#/components/schemas/SellerEntity"
             },
             "CreateSellerValidationError": {
                 "type": "object",
                 "properties": {
-                    "success": {
-                        "type": "boolean",
-                        "default": false
+                    "name": {
+                        "type": "string",
+                        "default": "This field cannot be empty"
                     },
-                    "data": {
-                        "type": "object",
-                        "properties": {
-                            "name": {
-                                "type": "string",
-                                "default": "This field cannot be empty"
-                            },
-                            "email": {
-                                "type": "string",
-                                "default": "This cannot be empty and must be an email"
-                            }
-                        }
+                    "email": {
+                        "type": "string",
+                        "default": "This cannot be empty and must be an email"
                     }
                 }
             },
             "CreateSellerDataError": {
-                "type": "object",
+                "type": "string",
                 "properties": {
-                    "success": {
-                        "type": "boolean",
-                        "default": false
-                    },
-                    "data": {
-                        "type": "string",
-                        "default": "Some Worng Happens"
-                    }
+                    "default": "Some Worng Happens"
                 }
             },
             "CreatedSeller": {
                 "type": "object",
                 "properties": {
-                    "success": {
-                        "type": "boolean",
-                        "default": true
+                    "id": {
+                        "type": "integer",
+                        "default": 1
                     },
-                    "data": {
-                        "type": "object",
-                        "properties": {
-                            "id": {
-                                "type": "integer",
-                                "default": 1
-                            },
-                            "name": {
-                                "type": "string",
-                                "default": "Seller name"
-                            },
-                            "email": {
-                                "type": "string",
-                                "default": "Seller email"
-                            },
-                            "commission": {
-                                "type": "number",
-                                "default": 8.5
-                            }
-                        }
+                    "name": {
+                        "type": "string",
+                        "default": "Seller name"
+                    },
+                    "email": {
+                        "type": "string",
+                        "default": "Seller email"
+                    },
+                    "commission": {
+                        "type": "number",
+                        "default": 8.5
                     }
                 }
             },
             "CreatedSell": {
                 "type": "object",
                 "properties": {
-                    "success": {
-                        "type": "boolean",
-                        "default": true
+                    "id": {
+                        "type": "integer",
+                        "description": "Sell id",
+                        "default": 1
                     },
-                    "data": {
-                        "type": "object",
-                        "properties": {
-                            "id": {
-                                "type": "integer",
-                                "description": "Sell id",
-                                "default": 1
-                            },
-                            "name": {
-                                "type": "string",
-                                "description": "Seller name",
-                                "default": "Seller name"
-                            },
-                            "email": {
-                                "type": "string",
-                                "description": "Seller email",
-                                "default": "Seller email"
-                            },
-                            "commission": {
-                                "type": "number",
-                                "description": "Sell commission",
-                                "default": 8.5
-                            },
-                            "amount": {
-                                "type": "number",
-                                "description": "Sell amount",
-                                "default": 8.5
-                            },
-                            "sold_at": {
-                                "type": "string",
-                                "description": "Date of sell"
-                            }
-                        }
+                    "name": {
+                        "type": "string",
+                        "description": "Seller name",
+                        "default": "Seller name"
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "Seller email",
+                        "default": "Seller email"
+                    },
+                    "commission": {
+                        "type": "number",
+                        "description": "Sell commission",
+                        "default": 8.5
+                    },
+                    "amount": {
+                        "type": "number",
+                        "description": "Sell amount",
+                        "default": 8.5
+                    },
+                    "sold_at": {
+                        "type": "string",
+                        "description": "Date of sell"
                     }
                 }
             },
@@ -377,9 +355,46 @@
                         "type": "integer",
                         "default": "Sell amount"
                     },
-                    "email": {
+                    "amount": {
                         "type": "number",
-                        "default": "Seller id"
+                        "description": "Seller id"
+                    }
+                }
+            },
+            "ListSellFromSeller": {
+                "type": "object",
+                "required": [
+                    "sellerId"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "description": "Sell id",
+                        "default": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Seller name",
+                        "default": "Seller name"
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "Seller email",
+                        "default": "Seller email"
+                    },
+                    "commission": {
+                        "type": "number",
+                        "description": "Sell commission",
+                        "default": 8.5
+                    },
+                    "amount": {
+                        "type": "number",
+                        "description": "Sell amount",
+                        "default": 8.5
+                    },
+                    "sold_at": {
+                        "type": "string",
+                        "description": "Date of sell"
                     }
                 }
             }
